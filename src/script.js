@@ -1,17 +1,14 @@
 var submitButton = document.querySelector('.submit-button');
+var usernameInput = document.querySelector('.username-input');
+var passwordInput = document.querySelector('.password-input');
 
-var object = {
-  name: 'tory',
-  age: 35
-};
-
-class Person {
+class User {
   name;
-  age;
+  password;
 
-  constructor(name, age) {
+  constructor(name, password) {
     this.name = name;
-    this.age = age;
+    this.password = password;
   }
 }
 
@@ -19,7 +16,5 @@ submitButton.addEventListener('click', submitForm);
 
 function submitForm(event) {
   event.preventDefault();
-  console.log('submit!');
+  console.log(new User(usernameInput.value, passwordInput.value));
 };
-
-console.log(new Person ('Chet', 42));
