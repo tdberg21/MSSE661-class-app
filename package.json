@@ -1,0 +1,22 @@
+{
+  "name": "661-class-project",
+  "version": "1.0.0",
+  "description": "Project built in class while taking MSSE-661",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tdberg21/MSSE661-class-app.git"
+  },
+  "author": "Tory Dannenberg",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tdberg21/MSSE661-class-app/issues"
+  },
+  "homepage": "https://github.com/tdberg21/MSSE661-class-app#readme",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}
