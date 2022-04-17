@@ -3,53 +3,55 @@ var usernameInput = document.querySelector(".username-input");
 var passwordInput = document.querySelector(".password-input");
 var emailInput = document.querySelector(".email-input");
 
-class User {
-  name;
-  password;
-
-  constructor(name, password) {
-    this.name = name;
-    this.password = password;
-  }
+const submitForm = (event) => {
+  event.preventDefault();
+  console.log(new User(usernameInput.value, passwordInput.value));
 }
 
-const registerNewUser = function(event) {
+const loginUser = async (event) => {
+  event.preventDefault();
+  const username = usernameInput.value;
+  const password = passwordInput.value;
+
+  const res = await login({ username, password });
+
+  const { auth, access_token, refresh_token } = res;
+
+  setStorage('isAuth', auth);
+  setStorage('access_token', access_token);
+  setStorage('refresh_token', refresh_token);
+
+  window.location.href = 'home.html';
+};
+
+const registerNewUser = (event) => {
   event.preventDefault();
   const username = usernameInput.value;
   const password = passwordInput.value;
   const email = emailInput.value;
-  console.log('register')
 
   register({
-    username: username,
-    email: email,
-    password: password
-  }).then(function(res) {
-    window.location.href = 'home.html';
+    username,
+    email,
+    password,
+  }).then((res) => {
+    window.location.href = '/';
   });
-}
-
-const loginUser = function (event) {
-  event.preventDefault();
-  const username = usernameInput.value;
-  const password = passwordInput.value;
-  console.log(username, password);
-
-  login({
-    username: username,
-    password: password
-  }).then(function(res) {
-    window.location.href = 'home.html';
-  })
 };
 
-const logoutUser = function (event) {
+const logoutUser = (event) => {
   event.preventDefault();
-  console.log('logged out!');
+  logout();
+  window.location.href = '/';
 };
 
-
-function submitForm(event) {
-  event.preventDefault();
-  console.log(new User(usernameInput.value, passwordInput.value));
-}
+(() => {
+  if (storageHasData()) {
+    const isAuth = getStorage('isAuth');
+    if (!isAuth) {
+      document.getElementById('logout').style.display = 'none';
+    } else {
+      document.getElementById('logout').style.display = 'block';
+    }
+  }
+})();

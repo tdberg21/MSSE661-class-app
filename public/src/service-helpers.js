@@ -1,25 +1,36 @@
-function _get(url) {
-  return fetch(url, {
-    method: 'GET'
-  });
-}
+const access_token = storageHasData() ? getStorage("access_token") : "";
+const token = `Bearer ${access_token}`;
 
-function _post(url, data) {
-  return fetch(url, {
-    method: 'POST',
+const _get = async (url) => {
+  const res = await fetch(url, {
+    method: "GET",
     headers: {
-      'Content-Type': 'application/json'
+      Authorization: token,
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(data) // '{ "username": "tory", "password": "taco"}'
   });
-}
+  return res.json();
+};
 
-function _put(url, data) {
-  return fetch(url, {
-    method: 'PUT',
+const _post = async (url, data) => {
+  const res = await fetch(url, {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(data)
+    body: JSON.stringify(data),
   });
-}
+
+  return res.json();
+};
+
+const _put = async (url, data) => {
+  const res = await fetch(url, {
+    method: "PUT",
+    headers: {
+      Authorization: token,
+    },
+    body: JSON.stringify(data),
+  });
+  return res.json();
+};
