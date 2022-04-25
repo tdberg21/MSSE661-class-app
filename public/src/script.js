@@ -1,19 +1,11 @@
-var submitButton = document.querySelector(".submit-button");
-var usernameInput = document.querySelector(".username-input");
-var passwordInput = document.querySelector(".password-input");
-var emailInput = document.querySelector(".email-input");
+const doLogin = async (e) => {
+  e.preventDefault();
+  const username = document.getElementById('formInputUsername').value;
+  const password = document.getElementById('formInputPassword').value;
 
-const submitForm = (event) => {
-  event.preventDefault();
-  console.log(new User(usernameInput.value, passwordInput.value));
-}
-
-const loginUser = async (event) => {
-  event.preventDefault();
-  const username = usernameInput.value;
-  const password = passwordInput.value;
-
-  const res = await login({ username, password });
+  const res = await login({ username, password }).catch((err) => {
+    alert('Failed to login. Please try again later.');
+  });
 
   const { auth, access_token, refresh_token } = res;
 
@@ -24,23 +16,25 @@ const loginUser = async (event) => {
   window.location.href = 'home.html';
 };
 
-const registerNewUser = (event) => {
-  event.preventDefault();
-  const username = usernameInput.value;
-  const password = passwordInput.value;
-  const email = emailInput.value;
+const doRegister = async (e) => {
+  e.preventDefault();
+  const username = document.getElementById('formInputUsernameReg').value;
+  const email = document.getElementById('formInputEmailReg').value;
+  const password = document.getElementById('formInputPasswordReg').value;
 
-  register({
+  const res = await register({
     username,
     email,
     password,
-  }).then((res) => {
-    window.location.href = '/';
   });
+
+  if (res) {
+    window.location.href = '/';
+  }
 };
 
-const logoutUser = (event) => {
-  event.preventDefault();
+const doLogout = (e) => {
+  e.preventDefault();
   logout();
   window.location.href = '/';
 };
